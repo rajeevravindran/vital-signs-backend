@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from random import randint
 from .models import HeartBeat
-
+import json
 #import serial
 
 #ser=serial.Serial('COM3',38400)
@@ -25,4 +25,6 @@ def update(request):
     print ("UPDATED")
     data=HeartBeat(current_bpm=temp,current_time=timezone.now())
     data.save()
-    return HttpResponse(temp)
+    return_reponse={'current_heartbeat':temp,'current_time':str(timezone.now())}
+    print return_reponse
+    return HttpResponse(json.dumps(return_reponse))
